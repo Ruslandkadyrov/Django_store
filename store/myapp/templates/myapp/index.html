@@ -6,7 +6,19 @@
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'myapp/styles.css'%}">
   </head>
-  <body class="bg-sky-500">
+  <body>
+    <nav>
+      <div>
+        <div>
+          <div>
+            <div class="flex">
+              <img class="h-8 w-8" src="{% static 'myapp/images/store.png'%}">
+              <span class="text-xl">Pro Shop</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
     <h1> Главная страница магазина </h1>
     <h2> 
         {%for item in items%} 
