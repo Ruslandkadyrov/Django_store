@@ -148,3 +148,4 @@ dmypy.json
 # папки со статикой и медиа
 media/
 store/myapp/static
+node_modules
