@@ -18,5 +18,17 @@ def index_item(request, id: int):
     return render(request, "myapp/detail.html", context)
 
 
-def contacts(request):
-    return render(request, "myapp/contacts.html")
+def contact(request):
+    return render(request, "myapp/contact.html")
+
+
+def cart(request):
+    return render(request, "myapp/cart.html")
+
+
+def categories(request):
+    return render(request, "myapp/categories.html")
+
+
+def product(request):
+    return render(request, "myapp/product.html")
