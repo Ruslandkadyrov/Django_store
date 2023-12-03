@@ -10,14 +10,6 @@ def index(request):
     return render(request, "myapp/index.html", context)
 
 
-def index_item(request, id: int):
-    item = Product.objects.get(id=id)
-    context = {
-        'item': item
-    }
-    return render(request, "myapp/detail.html", context)
-
-
 def contact(request):
     return render(request, "myapp/contact.html")
 
@@ -30,5 +22,9 @@ def categories(request):
     return render(request, "myapp/categories.html")
 
 
-def product(request):
-    return render(request, "myapp/product.html")
+def product(request, id: int):
+    item = Product.objects.get(id=id)
+    context = {
+        'item': item
+    }
+    return render(request, "myapp/product.html", context)

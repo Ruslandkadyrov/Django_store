@@ -3,14 +3,14 @@
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <div class="footer_logo"><a href="#">Wish</a></div>
+                <div class="footer_logo"><a href="{% url 'myapp:index' %}">Wish</a></div>
                 <nav class="footer_nav">
                     <ul>
-                        <li><a href="index.html">home</a></li>
-                        <li><a href="categories.html">clothes</a></li>
-                        <li><a href="categories.html">accessories</a></li>
-                        <li><a href="categories.html">lingerie</a></li>
-                        <li><a href="contact.html">contact</a></li>
+                        <li><a href="{% url 'myapp:index' %}">home</a></li>
+                        <li><a href="{% url 'myapp:categories' %}">clothes</a></li>
+                        <li><a href="{% url 'myapp:categories' %}">accessories</a></li>
+                        <li><a href="{% url 'myapp:categories' %}">lingerie</a></li>
+                        <li><a href="{% url 'myapp:contact' %}">contact</a></li>
                     </ul>
                 </nav>
                 <div class="footer_social">

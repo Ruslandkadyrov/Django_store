@@ -1,14 +1,14 @@
 {% load static %}
 <header class="header">
     <div class="header_inner d-flex flex-row align-items-center justify-content-start">
-        <div class="logo"><a href="#">Wish</a></div>
+        <div class="logo"><a href="{% url 'myapp:index' %}">Wish</a></div>
         <nav class="main_nav">
             <ul>
-                <li><a href="#">home</a></li>
-                <li><a href="categories.html">clothes</a></li>
-                <li><a href="categories.html">accessories</a></li>
-                <li><a href="categories.html">lingerie</a></li>
-                <li><a href="contact.html">contact</a></li>
+                <li><a href="{% url 'myapp:index' %}">home</a></li>
+                <li><a href="{% url 'myapp:categories' %}">clothes</a></li>
+                <li><a href="{% url 'myapp:categories' %}">accessories</a></li>
+                <li><a href="{% url 'myapp:categories' %}">lingerie</a></li>
+                <li><a href="{% url 'myapp:contact' %}">contact</a></li>
             </ul>
         </nav>
         <div class="header_content ml-auto">
@@ -20,7 +20,7 @@
             </div>
             <div class="shopping">
                 <!-- Cart -->
-                <a href="#">
+                <a href="{% url 'myapp:cart' %}">
                     <div class="cart">
                         <img src="{% static 'myapp/images/shopping-bag.svg'%}" alt="">
                         <div class="cart_num_container">
