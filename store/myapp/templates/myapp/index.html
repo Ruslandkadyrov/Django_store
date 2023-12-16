@@ -151,7 +151,7 @@
 	</div>
 
 	<!-- New Arrivals -->
-
+	
 	<div class="arrivals">
 		<div class="container">
 			<div class="row">
@@ -162,10 +162,11 @@
 					</div>
 				</div>
 			</div>
+			
 			<div class="row products_container">
 
 				<!-- Product -->
-				{% for item in items %}
+			{% for item in items %}
 				<div class="col-lg-4 product_col">
 					<div class="product">
 						<div class="product_image">
@@ -181,7 +182,7 @@
 						<div class="product_content clearfix">
 							<div class="product_info">
 								<div class="product_name"><a href="{% url 'myapp:product' item.id %}">{{item.name}}</a></div>
-								<div class="product_price">{{item.price}}</div>
+								<div class="product_price">{{item.price}} руб.</div>
 							</div>
 							<div class="product_options">
 								<div class="product_buy product_option"><img src="{% static 'myapp/images/shopping-bag-white.svg'%}" alt=""></div>
@@ -190,8 +191,11 @@
 						</div>
 					</div>
 				</div>
-				{% endfor %}
-
+			{% endfor %}
+			</div>
+		</div>
+	</div>
+	
 	<!-- Extra -->
 
 	<div class="extra clearfix">
