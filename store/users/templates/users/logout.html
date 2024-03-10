@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{%load static%} 
+<html lang="en">
+<head>
+<title>Checkout</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Wish shop project">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{% static 'users/styles/bootstrap4/bootstrap.min.css'%}">
+<link href="{% static 'users/plugins/font-awesome-4.7.0/css/font-awesome.min.css'%}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{% static 'users/styles/checkout.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'myapp/styles/responsive.css'%}">
+</head>
+<body>
+
+<div class="super_container">
+{% include 'users/includes/header.html' %}	
+{% include 'users/includes/menu.html' %}
+ 
+	<!-- Home -->
+
+	<div class="home">
+		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="{% static 'users/images/categories.jpg' %}" data-speed="0.8"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="home_container">
+						<div class="home_content">
+							<div class="home_title">Выход из системы</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% include 'myapp/includes/footer.html' %}
+
+<script src="{% static 'users/js/jquery-3.2.1.min.js'%}"></script>
+<script src="{% static 'users/styles/bootstrap4/popper.js'%}"></script>
+<script src="{% static 'users/styles/bootstrap4/bootstrap.min.js'%}"></script>
+<script src="{% static 'users/plugins/easing/easing.js'%}"></script>
+<script src="{% static 'users/plugins/parallax-js-master/parallax.min.js'%}"></script>
+<script src="{% static 'users/js/checkout_custom.js'%}"></script>
+</body>
+</html>

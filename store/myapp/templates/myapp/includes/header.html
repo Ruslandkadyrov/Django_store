@@ -9,6 +9,12 @@
                 <li><a href="{% url 'myapp:categories' %}">accessories</a></li>
                 <li><a href="{% url 'myapp:categories' %}">lingerie</a></li>
                 <li><a href="{% url 'myapp:contact' %}">contact</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'users:logout' %}">logout</a></li>
+                    <li><a href="{% url 'users:profile' %}">profile</a></li>
+                    {% else %}
+                        <li><a href="{% url 'users:login' %}">login</a></li>
+                {% endif %}
             </ul>
         </nav>
         <div class="header_content ml-auto">

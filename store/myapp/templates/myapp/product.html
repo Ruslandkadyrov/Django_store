@@ -49,9 +49,8 @@
 				<div class="col">
 					<div class="current_page">
 						<ul>
-							<li><a href="categories.html">Woman's Fashion</a></li>
-							<li><a href="categories.html">Swimsuits</a></li>
-							<li>2 Piece Swimsuits</li>
+							<li><a href="categories.html">{{item.category.name}}</a></li>
+							<li>{{item.name}}</li>
 						</ul>
 					</div>
 				</div>
@@ -63,9 +62,9 @@
 					<div class="product_image">
 						<div class="product_image_large"><img src="{{item.image.url}}" alt=""></div>
 						<div class="product_image_thumbnails d-flex flex-row align-items-start justify-content-start">
-							<div class="product_image_thumbnail" style="background-image:url({% static 'myapp/images/product_image_1.jpg'%})" data-image="{% static 'myapp/images/product_image_1.jpg'%}"></div>
-							<div class="product_image_thumbnail" style="background-image:url({% static 'myapp/images/product_image_2.jpg'%})" data-image="{% static 'myapp/images/product_image_2.jpg'%}"></div>
-							<div class="product_image_thumbnail" style="background-image:url({% static 'myapp/images/product_image_4.jpg'%})" data-image="{% static 'myapp/images/product_image_4.jpg'%}"></div>
+							<div class="product_image_thumbnail" style="background-image:url({{item.image.url}})" data-image="{{item.image.url}}"></div>
+							<div class="product_image_thumbnail" style="background-image:url({{item.image.url}})" data-image="{{item.image.url}}"></div>
+							<div class="product_image_thumbnail" style="background-image:url({{item.image.url}})" data-image="{{item.image.url}}"></div>
 						</div>
 					</div>
 				</div>
@@ -84,15 +83,20 @@
 						</div>
 						<!-- In Stock -->
 						<div class="in_stock_container">
-							<div class="in_stock in_stock_true"></div>
-							<span>in stock</span>
+							{% if item.count > 0 %}
+								<div class="in_stock in_stock_true"></div>
+								<span>В наличии</span>
+							{% else %}
+								<div class="out_of_stock"></div>
+								<span>Нет в наличии</span>
+							{% endif %}
 						</div>
 						<div class="product_text">
 							<p>{{item.description}}</p>
 						</div>
 						<!-- Product Quantity -->
 						<div class="product_quantity_container">
-							<span>Quantity</span>
+							<span>Количество</span>
 							<div class="product_quantity clearfix">
 								<input id="quantity_input" type="text" pattern="[0-9]*" value="1">
 								<div class="quantity_buttons">
@@ -103,29 +107,15 @@
 						</div>
 						<!-- Product Size -->
 						<div class="product_size_container">
-							<span>Size</span>
+							<span>Размеры в наличии</span>
 							<div class="product_size">
 								<ul class="d-flex flex-row align-items-start justify-content-start">
+									{% for size in item.sizes.all %}
 									<li>
-										<input type="radio" id="radio_1" name="product_radio" class="regular_radio radio_1">
-										<label for="radio_1">XS</label>
+										<input type="radio" id="radio_{{ size.id }}" name="product_radio" value="{{ size.size }}" class="regular_radio radio_{{ size.id }}">
+										<label for="radio_{{ size.id }}">{{ size.size }}
 									</li>
-									<li>
-										<input type="radio" id="radio_2" name="product_radio" class="regular_radio radio_2" checked>
-										<label for="radio_2">S</label>
-									</li>
-									<li>
-										<input type="radio" id="radio_3" name="product_radio" class="regular_radio radio_3">
-										<label for="radio_3">M</label>
-									</li>
-									<li>
-										<input type="radio" id="radio_4" name="product_radio" class="regular_radio radio_4">
-										<label for="radio_4">L</label>
-									</li>
-									<li>
-										<input type="radio" id="radio_5" name="product_radio" class="regular_radio radio_5">
-										<label for="radio_5">XL</label>
-									</li>
+									{% endfor %}
 								</ul>
 							</div>
 							<div class="button cart_button"><a href="#">add to cart</a></div>
