@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
-from django.http import HttpResponse
-from .models import Product
+from .models import Category, Product, Subcategory, Size
+
 
 def index(request):
     items = Product.objects.all()
@@ -18,8 +18,41 @@ def cart(request):
     return render(request, "myapp/cart.html")
 
 
-def categories(request):
-    return render(request, "myapp/categories.html")
+def clothes(request):
+    category_clothing = Category.objects.get(name='Одежда')
+    subcategories_clothing = Subcategory.objects.filter(category=category_clothing)
+    subcategory_ids = [subcategory.id for subcategory in subcategories_clothing]
+    subcategorys = Subcategory.objects.filter(id__in=subcategory_ids)
+    items = Product.objects.filter(subcategory__id__in=subcategory_ids)
+    sizes = Size.objects.all()
+    context = {
+        'items': items,
+        'subcategorys': subcategorys,
+        'sizes': sizes,
+    }
+    return render(request, "myapp/clothes.html", context)
+
+
+def accessories(request):
+    category_clothing = Category.objects.get(name='Аксессуары')
+    subcategories_clothing = Subcategory.objects.filter(category=category_clothing)
+    subcategory_ids = [subcategory.id for subcategory in subcategories_clothing]
+    items = Product.objects.filter(subcategory__id__in=subcategory_ids)
+    context = {
+        'items': items
+    }
+    return render(request, "myapp/accessories.html", context)
+
+
+def lingerie(request):
+    category_clothing = Category.objects.get(name='Женское белье')
+    subcategories_clothing = Subcategory.objects.filter(category=category_clothing)
+    subcategory_ids = [subcategory.id for subcategory in subcategories_clothing]
+    items = Product.objects.filter(subcategory__id__in=subcategory_ids)
+    context = {
+        'items': items
+    }
+    return render(request, "myapp/lingerie.html", context)
 
 
 def product(request, id: int):
