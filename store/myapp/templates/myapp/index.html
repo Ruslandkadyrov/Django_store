@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {%load static%} 
-<html lang="en">
-<head>
+
+{% block head %}
 <title>wish</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,135 +16,96 @@
 <link rel="stylesheet" type="text/css" href="{% static 'myapp/styles/main_styles.css'%}">
 <link rel="stylesheet" type="text/css" href="{% static 'myapp/styles/responsive.css'%}">
 </head>
-<body>
+{% endblock %}
 
-<div class="super_container">
-{% include 'myapp/includes/header.html' %}	
-{% include 'myapp/includes/menu.html' %}
 
-	<!-- Home -->
-
-	<div class="home">
+{% block home %}
+<div class="home_slider_container">
+	<div class="owl-carousel owl-theme home_slider">
 		
-		<!-- Home Slider -->
-
-		<div class="home_slider_container">
-			<div class="owl-carousel owl-theme home_slider">
-				
-				<!-- Home Slider Item -->
-				<div class="owl-item">
-					<div class="home_slider_background" style="background-image:url({% static 'myapp/images/home_slider_1.jpg'%})"></div>
-					<div class="home_slider_content">
-						<div class="home_slider_content_inner">
-							<div class="home_slider_subtitle">Promo Prices</div>
-							<div class="home_slider_title">New Collection</div>
-						</div>	
-					</div>
-				</div>
-
-				<!-- Home Slider Item -->
-				<div class="owl-item">
-					<div class="home_slider_background" style="background-image:url({% static 'myapp/images/home_slider_1.jpg'%})"></div>
-					<div class="home_slider_content">
-						<div class="home_slider_content_inner">
-							<div class="home_slider_subtitle">Promo Prices</div>
-							<div class="home_slider_title">New Collection</div>
-						</div>	
-					</div>
-				</div>
-
-				<!-- Home Slider Item -->
-				<div class="owl-item">
-					<div class="home_slider_background" style="background-image:url({% static 'myapp/images/home_slider_1.jpg'%})"></div>
-					<div class="home_slider_content">
-						<div class="home_slider_content_inner">
-							<div class="home_slider_subtitle">Promo Prices</div>
-							<div class="home_slider_title">New Collection</div>
-						</div>	
-					</div>
-				</div>
-
-			</div>
-			
-			<!-- Home Slider Nav -->
-
-			<div class="home_slider_next d-flex flex-column align-items-center justify-content-center"><img src="{% static 'myapp/images/arrow_r.png'%}" alt=""></div>
-
-			<!-- Home Slider Dots -->
-
-			<div class="home_slider_dots_container">
-				<div class="container">
-					<div class="row">
-						<div class="col">
-							<div class="home_slider_dots">
-								<ul id="home_slider_custom_dots" class="home_slider_custom_dots">
-									<li class="home_slider_custom_dot active">01.<div></div></li>
-									<li class="home_slider_custom_dot">02.<div></div></li>
-									<li class="home_slider_custom_dot">03.<div></div></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>		
+		<!-- Home Slider Item -->
+		<div class="owl-item">
+			<div class="home_slider_background" style="background-image:url({% static 'myapp/images/home_slider_1.jpg'%})"></div>
+			<div class="home_slider_content">
+				<div class="home_slider_content_inner">
+					<div class="home_slider_subtitle">Promo Prices</div>
+					<div class="home_slider_title">New Collection</div>
+				</div>	
 			</div>
 		</div>
-	</div>
 
-	<!-- New Arrivals -->
+		<!-- Home Slider Item -->
+		<div class="owl-item">
+			<div class="home_slider_background" style="background-image:url({% static 'myapp/images/home_slider_1.jpg'%})"></div>
+			<div class="home_slider_content">
+				<div class="home_slider_content_inner">
+					<div class="home_slider_subtitle">Promo Prices</div>
+					<div class="home_slider_title">New Collection</div>
+				</div>	
+			</div>
+		</div>
+
+		<!-- Home Slider Item -->
+		<div class="owl-item">
+			<div class="home_slider_background" style="background-image:url({% static 'myapp/images/home_slider_1.jpg'%})"></div>
+			<div class="home_slider_content">
+				<div class="home_slider_content_inner">
+					<div class="home_slider_subtitle">Promo Prices</div>
+					<div class="home_slider_title">New Collection</div>
+				</div>	
+			</div>
+		</div>
+
+	</div>
 	
-	<div class="arrivals">
+	<!-- Home Slider Nav -->
+
+	<div class="home_slider_next d-flex flex-column align-items-center justify-content-center"><img src="{% static 'myapp/images/arrow_r.png'%}" alt=""></div>
+
+	<!-- Home Slider Dots -->
+
+	<div class="home_slider_dots_container">
 		<div class="container">
 			<div class="row">
 				<div class="col">
-					<div class="section_title_container text-center">
-						<div class="section_subtitle">only the best</div>
-						<div class="section_title">new arrivals</div>
+					<div class="home_slider_dots">
+						<ul id="home_slider_custom_dots" class="home_slider_custom_dots">
+							<li class="home_slider_custom_dot active">01.<div></div></li>
+							<li class="home_slider_custom_dot">02.<div></div></li>
+							<li class="home_slider_custom_dot">03.<div></div></li>
+						</ul>
 					</div>
 				</div>
 			</div>
-			
-			<div class="row products_container">
+		</div>		
+	</div>
+</div>
+{% endblock %}
 
-				<!-- Product -->
-			{% for item in items %}
-				<div class="col-lg-4 product_col">
-					<div class="product">
-						<div class="product_image">
-							<img src="{{item.image.url}}" alt="">
-						</div>
-						<div class="rating rating_4">
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-						</div>
-						<div class="product_content clearfix">
-							<div class="product_info">
-								<div class="product_name"><a href="{% url 'myapp:product' item.id %}">{{item.name}}</a></div>
-								<div class="product_price">{{item.price}} руб.</div>
-							</div>
-							<div class="product_options">
-								<div class="product_buy product_option"><img src="{% static 'myapp/images/shopping-bag-white.svg'%}" alt=""></div>
-								<div class="product_fav product_option">+</div>
-							</div>
-						</div>
-					</div>
+
+{% block main %}
+<div class="arrivals">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div class="section_title_container text-center">
+					<div class="section_subtitle">only the best</div>
+					<div class="section_title">новые поступления</div>
 				</div>
-			{% endfor %}
 			</div>
+		</div>
+		
+		<div class="row products_container">
+
+			<!-- Product -->
+			{% for item in items %}
+			<div class="col-lg-4 product_col">
+				<div class="product">
+					{% include 'myapp/includes/product_info.html' %}
+				</div>
+			</div>
+			{% endfor %}
 		</div>
 	</div>
 </div>
-{% include 'myapp/includes/footer.html' %}
-
-<script src="{% static 'myapp/js/jquery-3.2.1.min.js'%}"></script>
-<script src="{% static 'myapp/styles/bootstrap4/popper.js'%}"></script>
-<script src="{% static 'myapp/styles/bootstrap4/bootstrap.min.js'%}"></script>
-<script src="{% static 'myapp/plugins/OwlCarousel2-2.2.1/owl.carousel.js'%}"></script>
-<script src="{% static 'myapp/plugins/easing/easing.js'%}"></script>
-<script src="{% static 'myapp/plugins/parallax-js-master/parallax.min.js'%}"></script>
-<script src="{% static 'myapp/plugins/colorbox/jquery.colorbox-min.js'%}"></script>
-<script src="{% static 'myapp/js/custom.js'%}"></script>
-</body>
-</html>
+{% endblock %}

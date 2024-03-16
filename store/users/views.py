@@ -29,3 +29,7 @@ def profile(request):
         user.save()
         return redirect('users:profile')
     return render(request, 'users/profile.html', {'user': user})
+
+
+def users_cart(request):
+    return render(request, 'users/cart.html')

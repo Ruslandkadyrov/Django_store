@@ -1,7 +1,8 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="en">
-<head>
+{% extends 'base.html' %}
+{%load static%}
+
+
+{% block head %}
 <title>Product</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,122 +12,100 @@
 <link href="{% static 'myapp/plugins/font-awesome-4.7.0/css/font-awesome.min.css'%}" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="{% static 'myapp/styles/product.css'%}">
 <link rel="stylesheet" type="text/css" href="{% static 'myapp/styles/product_responsive.css'%}">
-</head>
-<body>
+{% endblock %}
 
-<div class="super_container">
-{% include 'myapp/includes/header.html' %}	
-{% include 'myapp/includes/menu.html' %}
-	<!-- Home -->
 
-	<div class="home">
-		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="{% static 'myapp/images/product.jpg'%}" data-speed="0.8"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="home_container">
-						<div class="home_content">
-							<div class="home_title">Woman</div>
-							<div class="breadcrumbs">
-								<ul>
-									<li><a href="index.html">Home</a></li>
-									<li>Woman</li>
-									<li>Swimsuits</li>
-								</ul>
-							</div>
+{% block home %}
+<div class="home_background parallax-window" data-parallax="scroll" data-image-src="{% static 'myapp/images/product.jpg'%}" data-speed="0.8"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div class="home_container">
+					<div class="home_content">
+						<div class="home_title">Woman</div>
+						<div class="breadcrumbs">
+							<ul>
+								<li><a href="{% url 'myapp:index' %}">Главная</a></li>
+								<li><a href="{% url 'myapp:category_list' item.subcategory.category.slug %}">{{item.subcategory.category}}</a></li>
+								<li><a href="{% url 'myapp:subcategory_list' item.subcategory.slug %}">{{item.subcategory}}</a></li>
+								<li>{{item.name}}</li>
+							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-	<!-- Product -->
-
-	<div class="product">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="current_page">
-						<ul>
-							<li><a href="categories.html">{{item.subcategory.category}}</a></li>
-							<li><a href="categories.html">{{item.subcategory}}</a></li>
-							<li>{{item.name}}</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div class="row product_row">
-
-				<!-- Product Image -->
-				<div class="col-lg-7">
-					<div class="product_image">
-						<div class="product_image_large"><img src="{{item.image.url}}" alt=""></div>
-					</div>
-				</div>
-
-				<!-- Product Content -->
-				<div class="col-lg-5">
-					<div class="product_content">
-						<div class="product_name">{{item.name}}</div>
-						<div class="product_price">{{item.price}} руб.</div>
-						<div class="rating rating_4" data-rating="4">
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-						</div>
-						<!-- In Stock -->
-						<div class="in_stock_container">
-							{% if item.count > 0 %}
-								<div class="in_stock in_stock_true"></div>
-								<span>В наличии</span>
-							{% else %}
-								<div class="out_of_stock"></div>
-								<span>Нет в наличии</span>
-							{% endif %}
-						</div>
-						<div class="product_text">
-							<p>{{item.description}}</p>
-						</div>
-						<!-- Product Quantity -->
-						<div class="product_quantity_container">
-							<span>Количество</span>
-							<div class="product_quantity clearfix">
-								<input id="quantity_input" type="text" pattern="[0-9]*" value="1">
-								<div class="quantity_buttons">
-									<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-caret-up" aria-hidden="true"></i></div>
-									<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-caret-down" aria-hidden="true"></i></div>
-								</div>
-							</div>
-						</div>
-						<!-- Product Size -->
-						<div class="product_size_container">
-							<span>Размеры в наличии</span>
-							<div class="product_size">
-								<ul class="d-flex flex-row align-items-start justify-content-start">
-									{% for size in item.sizes.all %}
-									<li>
-										<input type="radio" id="radio_{{ size.id }}" name="product_radio" value="{{ size.size }}" class="regular_radio radio_{{ size.id }}">
-										<label for="radio_{{ size.id }}">{{ size.size }}
-									</li>
-									{% endfor %}
-								</ul>
-							</div>
-							<div class="button cart_button"><a href="#">add to cart</a></div>
-						</div>
-					</div>
-				</div>
-			</div>
-{% include 'myapp/includes/footer.html' %}
 </div>
+{% endblock %}
 
-<script src="{% static 'myapp/js/jquery-3.2.1.min.js'%}"></script>
-<script src="{% static 'myapp/styles/bootstrap4/popper.js'%}"></script>
-<script src="{% static 'myapp/styles/bootstrap4/bootstrap.min.js'%}"></script>
-<script src="{% static 'myapp/plugins/easing/easing.js'%}"></script>
-<script src="{% static 'myapp/plugins/parallax-js-master/parallax.min.js'%}"></script>
-<script src="{% static 'myapp/js/product_custom.js'%}"></script>
-</body>
-</html>
+
+{% block main %}
+<div class="product">
+	<div class="container">
+		<div class="row product_row">
+
+			<!-- Product Image -->
+			<div class="col-lg-7">
+				<div class="product_image">
+					<div class="product_image_large"><img src="{{item.image.url}}" alt=""></div>
+				</div>
+			</div>
+
+			<!-- Product Content -->
+			<div class="col-lg-5">
+				<div class="product_content">
+					<div class="product_name">{{item.name}}</div>
+					<div class="product_price">{{item.price}} руб.</div>
+					<div class="rating rating_4" data-rating="4">
+						<i class="fa fa-star"></i>
+						<i class="fa fa-star"></i>
+						<i class="fa fa-star"></i>
+						<i class="fa fa-star"></i>
+						<i class="fa fa-star"></i>
+					</div>
+					<!-- In Stock -->
+					<div class="in_stock_container">
+						{% if item.count > 0 %}
+							<div class="in_stock in_stock_true"></div>
+							<span>В наличии</span>
+						{% else %}
+							<div class="out_of_stock"></div>
+							<span>Нет в наличии</span>
+						{% endif %}
+					</div>
+					<div class="product_text">
+						<p>{{item.description}}</p>
+					</div>
+					<!-- Product Quantity -->
+					<div class="product_quantity_container">
+						<span>Количество</span>
+						<div class="product_quantity clearfix">
+							<input id="quantity_input" type="text" pattern="[0-9]*" value="1">
+							<div class="quantity_buttons">
+								<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-caret-up" aria-hidden="true"></i></div>
+								<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-caret-down" aria-hidden="true"></i></div>
+							</div>
+						</div>
+					</div>
+					<!-- Product Size -->
+					<div class="product_size_container">
+						<span>Размеры в наличии</span>
+						<div class="product_size">
+							<ul class="d-flex flex-row align-items-start justify-content-start">
+								{% for size in item.sizes.all %}
+								<li>
+									<input type="radio" id="radio_{{ size.id }}" name="product_radio" value="{{ size.size }}" class="regular_radio radio_{{ size.id }}">
+									<label for="radio_{{ size.id }}">{{ size.size }}
+								</li>
+								{% endfor %}
+							</ul>
+						</div>
+						<div class="button cart_button"><a href="{% url "cart:cart_add" item.id %}">add to cart</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

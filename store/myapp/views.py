@@ -1,5 +1,14 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from .models import Category, Product, Subcategory, Size
+from django.core.paginator import Paginator
+
+NUMBER_OF_POSTS_PER_PAGE = 10
+
+
+def paginator(request, product_list, number):
+    paginator = Paginator(product_list, number)
+    page_number = request.GET.get('page')
+    return paginator.get_page(page_number)
 
 
 def index(request):
@@ -10,49 +19,58 @@ def index(request):
     return render(request, "myapp/index.html", context)
 
 
+def categorys(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    subcategorys = Subcategory.objects.filter(category=category)
+    product_list = Product.objects.filter(subcategory__category=category)
+    sizes = Size.objects.filter(product__in=product_list).distinct()
+    items = paginator(request, product_list, NUMBER_OF_POSTS_PER_PAGE)
+    title = category
+    context = {
+        'subcategorys': subcategorys,
+        'items': items,
+        'title': title,
+        'sizes': sizes,
+        'category': category,
+    }
+    return render(request, 'myapp/category_list.html', context)
+
+
+def subcategorys(request, slug):
+    subcategory = get_object_or_404(Subcategory, slug=slug)
+    product_list = Product.objects.filter(subcategory=subcategory)
+    items = paginator(request, product_list, NUMBER_OF_POSTS_PER_PAGE)
+    title = subcategory
+    context = {
+        'items': items,
+        'title': title,
+        'subcategory': subcategory,
+    }
+    return render(request, 'myapp/subcategory_list.html', context)
+
+
+def category_size(request, category_slug, size_slug):
+    category = get_object_or_404(Category, slug=category_slug)
+    subcategorys = Subcategory.objects.filter(category=category)
+    size = get_object_or_404(Size, slug=size_slug)
+    product_list = Product.objects.filter(subcategory__in=subcategorys, sizes=size)
+    items = paginator(request, product_list, NUMBER_OF_POSTS_PER_PAGE)
+    title = size
+    context = {
+        'items': items,
+        'title': title,
+        'size': size,
+        'category': category,
+    }
+    return render(request, 'myapp/size_list.html', context)
+
+
 def contact(request):
     return render(request, "myapp/contact.html")
 
 
 def cart(request):
     return render(request, "myapp/cart.html")
-
-
-def clothes(request):
-    category_clothing = Category.objects.get(name='Одежда')
-    subcategories_clothing = Subcategory.objects.filter(category=category_clothing)
-    subcategory_ids = [subcategory.id for subcategory in subcategories_clothing]
-    subcategorys = Subcategory.objects.filter(id__in=subcategory_ids)
-    items = Product.objects.filter(subcategory__id__in=subcategory_ids)
-    sizes = Size.objects.all()
-    context = {
-        'items': items,
-        'subcategorys': subcategorys,
-        'sizes': sizes,
-    }
-    return render(request, "myapp/clothes.html", context)
-
-
-def accessories(request):
-    category_clothing = Category.objects.get(name='Аксессуары')
-    subcategories_clothing = Subcategory.objects.filter(category=category_clothing)
-    subcategory_ids = [subcategory.id for subcategory in subcategories_clothing]
-    items = Product.objects.filter(subcategory__id__in=subcategory_ids)
-    context = {
-        'items': items
-    }
-    return render(request, "myapp/accessories.html", context)
-
-
-def lingerie(request):
-    category_clothing = Category.objects.get(name='Женское белье')
-    subcategories_clothing = Subcategory.objects.filter(category=category_clothing)
-    subcategory_ids = [subcategory.id for subcategory in subcategories_clothing]
-    items = Product.objects.filter(subcategory__id__in=subcategory_ids)
-    context = {
-        'items': items
-    }
-    return render(request, "myapp/lingerie.html", context)
 
 
 def product(request, id: int):

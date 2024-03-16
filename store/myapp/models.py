@@ -1,9 +1,11 @@
 from django.utils import timezone
 from django.db import models
+import uuid
 
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
+    slug = models.SlugField(null=True, default=uuid.uuid4)
 
     def __str__(self):
         return self.name
@@ -12,6 +14,7 @@ class Category(models.Model):
 class Subcategory(models.Model):
     name = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
+    slug = models.SlugField(null=True, default=uuid.uuid4)
 
     def __str__(self):
         return self.name
@@ -19,6 +22,7 @@ class Subcategory(models.Model):
 
 class Size(models.Model):
     size = models.CharField(max_length=10)
+    slug = models.SlugField(null=True, default=uuid.uuid4)
 
     def __str__(self):
         return self.size
