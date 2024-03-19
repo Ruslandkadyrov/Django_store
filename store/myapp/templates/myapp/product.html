@@ -101,7 +101,13 @@
 								{% endfor %}
 							</ul>
 						</div>
-						<div class="button cart_button"><a href="{% url "cart:cart_add" item.id %}">add to cart</a></div>
+						<div class="button cart_button">
+							<a href="{% url "cart:cart_add" %}" 
+								class="btn add-to-cart" data-product-id="{{item.id}}">
+								{% csrf_token %}
+								add to cart
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>

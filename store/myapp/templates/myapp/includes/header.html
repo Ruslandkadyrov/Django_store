@@ -1,4 +1,7 @@
 {% load static %}
+{% load cart_tags %}
+{% user_carts request as carts%}
+
 <div class="header_inner d-flex flex-row align-items-center justify-content-start">
     <div class="logo"><a href="{% url 'myapp:index' %}">Wish</a></div>
     <nav class="main_nav">
@@ -30,7 +33,7 @@
                     <img src="{% static 'myapp/images/shopping-bag.svg'%}" alt="">
                     <div class="cart_num_container">
                         <div class="cart_num_inner">
-                            <div class="cart_num">1</div>
+                            <div class="cart_num">{{carts.total_quantity}}</div>
                         </div>
                     </div>
                 </div>

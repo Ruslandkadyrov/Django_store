@@ -7,9 +7,9 @@ from cart.utils import get_user_carts
 from myapp.models import Product
 
 
-def cart_add(request, product_id):
+def cart_add(request):
 
-    # product_id = request.POST.get("product_id")
+    product_id = request.POST.get("product_id")
 
     product = Product.objects.get(id=product_id)
     
@@ -46,7 +46,7 @@ def cart_add(request, product_id):
         "cart_items_html": cart_items_html,
     }
 
-    return JsonResponse(response_data)
+    return redirect(request.META['HTTP_REFERER'])
      
 
 def cart_change(request, product_id):
@@ -72,22 +72,22 @@ def cart_change(request, product_id):
     return JsonResponse(response_data)
 
 
-def cart_remove(request, product_id):
+def cart_remove(request, cart_id):
 
-    cart_id = request.POST.get("cart_id")
+    # cart_id = request.POST.get("cart_id")
 
     cart = Cart.objects.get(id=cart_id)
-    quantity = cart.quantity
+    # quantity = cart.quantity
     cart.delete()
 
-    user_cart = get_user_carts(request)
-    cart_items_html = render_to_string(
-        "carts/includes/included_cart.html", {"carts": user_cart}, request=request)
+    # user_cart = get_user_carts(request)
+    # cart_items_html = render_to_string(
+    #     "carts/includes/included_cart.html", {"carts": user_cart}, request=request)
 
-    response_data = {
-        "message": "Товар удален",
-        "cart_items_html": cart_items_html,
-        "quantity_deleted": quantity,
-    }
+    # response_data = {
+    #     "message": "Товар удален",
+    #     "cart_items_html": cart_items_html,
+    #     "quantity_deleted": quantity,
+    # }
 
-    return JsonResponse(response_data)
+    return redirect(request.META['HTTP_REFERER'])
