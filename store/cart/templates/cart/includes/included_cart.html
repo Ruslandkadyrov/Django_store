@@ -1,0 +1,76 @@
+{% load static %}
+{% for cart in carts %}
+<div class="row">
+    <div class="col">
+        <div class="cart_products">
+            <div class=" cart_product d-flex flex-md-row flex-column align-items-md-center align-items-start justify-content-start">
+                <!-- Product Image -->
+                <div class="cart_product_image"><img src="{{cart.product.image.url}}" alt="" width="54" height="74"></div>
+                <!-- Product Name -->
+                <div class="cart_product_name"><a href="product.html">{{cart.product.name}}</a></div>
+                <div class="cart_product_info ml-auto">
+                    <div class="cart_product_info_inner d-flex flex-row align-items-center justify-content-md-end justify-content-start">
+                        <!-- Product Price -->
+                        <div class="cart_product_price">{{cart.product.price}} руб.</div>
+                        <!-- Product Quantity -->
+                        <div class="product_quantity_container">
+                            <div class="product_quantity clearfix">
+                                <input id="quantity_input" type="text" pattern="[0-9]*" value="{{cart.quantity}}">
+                                <div class="quantity_buttons">
+                                    <div id="quantity_inc_button" class="quantity_inc quantity_control increment"
+                                    data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}">
+                                        {% csrf_token %}
+                                        <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                    </div>
+                                    <div id="quantity_dec_button" class="quantity_dec quantity_control decrement"
+                                    data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}">
+                                        {% csrf_token %}
+                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Products Total Price -->
+                        <div class="cart_product_total">{{cart.products_price}} руб.</div>
+                        <!-- Product Cart Trash Button -->
+                        <div class="cart_product_button">
+                            <a href="{% url "cart:cart_remove"%}"  
+                                class="cart_product_remove" 
+                                data-cart-id="{{cart.id}}">
+                                {% csrf_token %}
+                                <img src="{% static 'myapp/images/trash.png'%}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+<div class="row">
+    <div class="col">
+        <div class="cart_control_bar d-flex flex-md-row flex-column align-items-start justify-content-start">
+            <button class="button_clear cart_button">clear cart</button>
+            <button class="button_update cart_button">update cart</button>
+            <button class="button_update cart_button_2 ml-md-auto">continue shopping</button>
+        </div>
+    </div>
+</div>
+<div class="row cart_extra">
+    <!-- Cart Total -->
+    <div class="col-lg-6 offset-lg-3">
+        <div class="cart_total">
+            <div class="cart_title">Общая стоимость товаров</div>
+            <ul>
+                <li class="d-flex flex-row align-items-center justify-content-start">
+                    <div class="cart_total_title">Итого</div>
+                    <div class="cart_total_price ml-auto">{{carts.total_price}} руб.</div>
+                </li>
+            </ul>
+            {% if carts %}
+                <button class="cart_total_button">proceed to checkout</button>
+            {% endif %}
+        </div>
+    </div>
+</div>

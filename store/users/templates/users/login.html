@@ -1,7 +1,7 @@
-<!DOCTYPE html>
-{%load static%} 
-<html lang="en">
-<head>
+{% extends 'base.html' %}
+{%load static%}
+
+{% block head %}
 <title>Checkout</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,67 +12,51 @@
 <link rel="stylesheet" type="text/css" href="{% static 'users/styles/checkout.css'%}">
 <link rel="stylesheet" type="text/css" href="{% static 'myapp/styles/responsive.css'%}">
 </head>
-<body>
+{% endblock %}
 
-<div class="super_container">
-{% include 'users/includes/header.html' %}	
-{% include 'users/includes/menu.html' %}
- 
-	<!-- Home -->
-
-	<div class="home">
-		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="{% static 'users/images/categories.jpg' %}" data-speed="0.8"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="home_container">
-						<div class="home_content">
-							<div class="home_title">Авторизация</div>
-							<div class="breadcrumbs">
-								<ul>
-									<li><a href="index.html">Home</a></li>
-									<li><a href="index.html">Shopping Cart</a></li>
-									<li>Shopping Cart</li>
-								</ul>
-							</div>
+{% block home %}
+<div class="home_background parallax-window" data-parallax="scroll" data-image-src="{% static 'users/images/categories.jpg' %}" data-speed="0.8"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div class="home_container">
+					<div class="home_content">
+						<div class="home_title">Авторизация</div>
+						<div class="breadcrumbs">
+							<ul>
+								<li><a href="index.html">Home</a></li>
+								<li><a href="index.html">Shopping Cart</a></li>
+								<li>Shopping Cart</li>
+							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+{% endblock %}
 
-	<!-- Checkout -->
+{% block main %}
+<div class="checkout">
+	<div class="container">
+		<div class="row">
 
-	<div class="checkout">
-		<div class="container">
-			<div class="row">
-
-				<!-- Billing Details -->
-				<div class="col-lg-6">
-					<div class="billing">
-						<div class="checkout_title">Авторизация</div>
-						<div class="checkout_form_container">
-							<form action="#" id="checkout_form" method="post">
-								{% csrf_token %}
-								<input type="text" class="checkout_input" name="username" placeholder="Логин">
-								<input type="text" class="checkout_input" name="password" placeholder="Пароль" required="required">
-								<button type="submit" class="cart_total_button">Авторизоваться</button>
-								<button class="cart_total_button"><a href="{% url 'users:register' %}" style="color: white;" onmouseover="this.style.color='black'" onmouseout="this.style.color='white'">Зарегистрироваться</a></button>
-							</form>
-						</div>
+			<!-- Billing Details -->
+			<div class="col-lg-6">
+				<div class="billing">
+					<div class="checkout_title">Авторизация</div>
+					<div class="checkout_form_container">
+						<form action="#" id="checkout_form" method="post">
+							{% csrf_token %}
+							<input type="text" class="checkout_input" name="username" placeholder="Логин">
+							<input type="text" class="checkout_input" name="password" placeholder="Пароль" required="required">
+							<button type="submit" class="cart_total_button">Авторизоваться</button>
+							<button class="cart_total_button"><a href="{% url 'users:register' %}" style="color: white;" onmouseover="this.style.color='black'" onmouseout="this.style.color='white'">Зарегистрироваться</a></button>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	{% include 'myapp/includes/footer.html' %}
-
-<script src="{% static 'users/js/jquery-3.2.1.min.js'%}"></script>
-<script src="{% static 'users/styles/bootstrap4/popper.js'%}"></script>
-<script src="{% static 'users/styles/bootstrap4/bootstrap.min.js'%}"></script>
-<script src="{% static 'users/plugins/easing/easing.js'%}"></script>
-<script src="{% static 'users/plugins/parallax-js-master/parallax.min.js'%}"></script>
-<script src="{% static 'users/js/checkout_custom.js'%}"></script>
-</body>
-</html>
+</div>
+{% endblock %}

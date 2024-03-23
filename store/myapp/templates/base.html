@@ -7,6 +7,7 @@
 <div class="super_container">
     <header class="header">
         {% include 'myapp/includes/header.html' %}
+        {% include "cart/notifications.html" %}
     </header>	
     {% include 'myapp/includes/menu.html' %}
     <div class="home">
@@ -33,5 +34,6 @@
 <script src="{% static 'myapp/plugins/jquery-ui-1.12.1.custom/jquery-ui.js'%}"></script>
 <script src="{% static 'myapp/js/cart_custom.js'%}"></script>
 <script src="{% static 'myapp/js/jquery-ajax.js'%}"></script>
+<script src="{% static 'myapp/js/checkout_custom.js'%}"></script>
 <body>
 </html>
