@@ -1,22 +1,30 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
-from django.contrib import messages
+from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
-from .forms import NewUserForm
-from django.contrib.auth.views import LoginView, LogoutView
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
+from cart.models import Cart
+from .forms import NewUserForm, UserLoginForm
+from django.contrib.auth.views import LogoutView
 
 
 def register(request):
     if request.method == 'POST':
         form = NewUserForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
+            form.save()
+            session_key = request.session.session_key
+            user = form.instance
+            auth.login(request, user)
+            if session_key:
+                Cart.objects.filter(session_key=session_key).update(user=user)
             messages.success(request, f"{user.username}, Вы зарегестрировались")
             return redirect("myapp:index")
     form = NewUserForm()
     context = {'form': form}
     return render(request, 'users/checkout.html', context)
+
 
 @login_required
 def profile(request):
@@ -39,11 +47,36 @@ def users_cart(request):
     return render(request, 'users/cart.html')
 
 
-class CustomLoginView(LoginView):
-    def get_success_url(self):
-        url = super().get_success_url()
-        messages.success(self.request, f"Добро пожаловать, {self.request.user.username}!")
-        return url
+def login(request):
+    if request.method == 'POST':
+        form = UserLoginForm(data=request.POST)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            user = auth.authenticate(username=username, password=password)
+
+            session_key = request.session.session_key
+
+            if user:
+                auth.login(request, user)
+                messages.success(request, f"{username}, Вы вошли в аккаунт")
+
+                if session_key:
+                    Cart.objects.filter(session_key=session_key).update(user=user)
+
+                redirect_page = request.POST.get('next', None)
+                if redirect_page and redirect_page != reverse('user:logout'):
+                    return HttpResponseRedirect(request.POST.get('next'))
+                    
+                return HttpResponseRedirect(reverse('myapp:index'))
+    else:
+        form = UserLoginForm()
+
+    context = {
+        'title': 'Home - Авторизация',
+        'form': form
+    }
+    return render(request, 'users/login.html', context)
 
 
 class CustomLogoutView(LogoutView):
