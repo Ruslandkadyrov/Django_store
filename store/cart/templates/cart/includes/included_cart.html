@@ -1,21 +1,43 @@
 {% load static %}
-{% for cart in carts %}
 <div class="row">
     <div class="col">
+        <div class="cart_title">ваша корзина покупок</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="cart_bar d-flex flex-row align-items-center justify-content-start">
+            <div class="cart_bar_title_name">Товар</div>
+            <div class="cart_bar_title_content ml-auto">
+                <div class="cart_bar_title_content_inner d-flex flex-row align-items-center justify-content-end">
+                    <div class="cart_bar_title_price">Цена</div>
+                    <div class="cart_bar_title_quantity">Количество</div>
+                    <div class="cart_bar_title_total">Итого</div>
+                    <div class="cart_bar_title_button"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        {% for cart in carts %}
         <div class="cart_products">
             <div class=" cart_product d-flex flex-md-row flex-column align-items-md-center align-items-start justify-content-start">
                 <!-- Product Image -->
                 <div class="cart_product_image"><img src="{{cart.product.image.url}}" alt="" width="54" height="74"></div>
                 <!-- Product Name -->
-                <div class="cart_product_name"><a href="product.html">{{cart.product.name}}</a></div>
+                <div class="cart_product_name"><a href="{% url 'myapp:product' cart.product.id %}">{{cart.product.name}}</a><br>
+                    <span style="font-size: 1.0em; color: #999;">Размер: {{cart.size}}</span>
+                </div>
                 <div class="cart_product_info ml-auto">
                     <div class="cart_product_info_inner d-flex flex-row align-items-center justify-content-md-end justify-content-start">
                         <!-- Product Price -->
                         <div class="cart_product_price">{{cart.product.price}} руб.</div>
                         <!-- Product Quantity -->
                         <div class="product_quantity_container">
-                            <div class="product_quantity clearfix">
-                                <input id="quantity_input" type="text" pattern="[0-9]*" value="{{cart.quantity}}">
+                            <div class="cart_quantity clearfix">
+                                <input id="quantity_input_{{cart.id}}" type="text" pattern="[0-9]*" value="{{cart.quantity}}">
                                 <div class="quantity_buttons">
                                     <div id="quantity_inc_button" class="quantity_inc quantity_control increment"
                                     data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}">
@@ -45,9 +67,10 @@
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
 </div>
-{% endfor %}
+
 <div class="row">
     <div class="col">
         <div class="cart_control_bar d-flex flex-md-row flex-column align-items-start justify-content-start">

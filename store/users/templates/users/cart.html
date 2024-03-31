@@ -42,26 +42,6 @@
 {% user_carts request as carts%}
 <div class="cart_container">
     <div class="container" id="cart-items-container">
-        <div class="row">
-            <div class="col">
-                <div class="cart_title">ваша корзина покупок</div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="cart_bar d-flex flex-row align-items-center justify-content-start">
-                    <div class="cart_bar_title_name">Товар</div>
-                    <div class="cart_bar_title_content ml-auto">
-                        <div class="cart_bar_title_content_inner d-flex flex-row align-items-center justify-content-end">
-                            <div class="cart_bar_title_price">Цена</div>
-                            <div class="cart_bar_title_quantity">Количество</div>
-                            <div class="cart_bar_title_total">Итого</div>
-                            <div class="cart_bar_title_button"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         {% include "cart/includes/included_cart.html" %}
     </div>
 </div>

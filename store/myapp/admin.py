@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import Product, Size, Category, Color, Subcategory
+from .models import Product, ProductSizeQty, Size, Category, Color, Subcategory
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -17,6 +17,11 @@ class ProductAdmin(admin.ModelAdmin):
 
 class SubcategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'category']
+
+
+@admin.register(ProductSizeQty)
+class ProductSizeQtyAdmin(admin.ModelAdmin):
+    list_display = ['product', 'size', 'quantity']
 
 
 admin.site.register(Product, ProductAdmin)

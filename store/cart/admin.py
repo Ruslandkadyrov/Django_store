@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from cart.models import Cart
+from cart.models import Cart, CartItem
 
 
 class CartTabAdmin(admin.TabularInline):
@@ -25,10 +25,4 @@ class CartAdmin(admin.ModelAdmin):
         return str(obj.product.name)
     
     def product_size(self, obj):
-        return str(obj.product.sizes)
-
-
-
-
-
-    
+        return str(obj.size)

@@ -4,24 +4,26 @@ from django.template.loader import render_to_string
 from cart.models import Cart
 from cart.utils import get_user_carts
 
-from myapp.models import Product
+from myapp.models import Product, Size
 
 
 def cart_add(request):
     product_id = request.POST.get("product_id")
+    size_id = request.POST.get("size_id")
     product = Product.objects.get(id=product_id)
+    size = Size.objects.get(id=size_id)
     if request.user.is_authenticated:
-        carts = Cart.objects.filter(user=request.user, product=product)
+        carts = Cart.objects.filter(user=request.user, product=product, size=size)
         if carts.exists():
             cart = carts.first()
             if cart:
                 cart.quantity += 1
                 cart.save()
         else:
-            Cart.objects.create(user=request.user, product=product, quantity=1)
+            Cart.objects.create(user=request.user, product=product, size=size, quantity=1)
     else:
         carts = Cart.objects.filter(
-            session_key=request.session.session_key, product=product)
+            session_key=request.session.session_key, product=product, size=size)
         if carts.exists():
             cart = carts.first()
             if cart:
@@ -29,7 +31,7 @@ def cart_add(request):
                 cart.save()
         else:
             Cart.objects.create(
-                session_key=request.session.session_key, product=product, quantity=1)
+                session_key=request.session.session_key, product=product, size=size, quantity=1)
     user_cart = get_user_carts(request)
     cart_items_html = render_to_string(
         "cart/includes/included_cart.html", {"carts": user_cart}, request=request)
