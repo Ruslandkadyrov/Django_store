@@ -6,6 +6,9 @@ from .models import Product, ProductSizeQty, Size, Category, Color, Subcategory
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'price', 'image_show', 'subcategory', "count", 'add_date']
+    list_editable = ["price", "count"]
+    search_fields = ["name"]
+    list_filter = ['subcategory']
 
     def image_show(self, obj):
         if obj.image:
