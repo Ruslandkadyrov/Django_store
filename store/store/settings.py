@@ -135,3 +135,8 @@ LOGIN_REDIRECT_URL = 'myapp:index'
 LOGOUT_REDIRECT_URL = 'myapp:index'
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+# AUTHENTICATION_BACKENDS = [
+#     'users.backends.PhoneModelBackend',
+#     'django.contrib.auth.backends.ModelBackend',
+# ]

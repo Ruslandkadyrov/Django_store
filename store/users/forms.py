@@ -4,18 +4,18 @@ from django import forms
 
 
 class NewUserForm(UserCreationForm):
-    password = forms.CharField(widget=forms.PasswordInput)
-    password_confirmation = forms.CharField(widget=forms.PasswordInput)
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
+    contact_number = forms.CharField(required=True)
+    password1 = forms.CharField(required=True)
+    password2 = forms.CharField(required=True)
 
     class Meta:
         model = CustomUser
         fields = (
             'first_name',
             'last_name',
-            'username',
             'contact_number',
-            'town',
-            'adress',
             'password1',
             'password2'
         )
@@ -25,7 +25,8 @@ class UserLoginForm(AuthenticationForm):
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'password']
+        fields = ['contact_number', 'password']
 
-    username = forms.CharField()
+    contact_number = forms.CharField()
     password = forms.CharField()
+    username = forms.CharField(required=False)

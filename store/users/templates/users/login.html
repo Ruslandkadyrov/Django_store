@@ -48,7 +48,7 @@
 					<div class="checkout_form_container">
 						<form action="#" id="checkout_form" method="post">
 							{% csrf_token %}
-							<input type="text" class="checkout_input" name="username" placeholder="Логин">
+							<input type="text" class="checkout_input" name="contact_number" placeholder="Номер телефона (8ХХХХХХХХХХ)">
 							<input type="text" class="checkout_input" name="password" placeholder="Пароль" required="required">
 							<button type="submit" class="cart_total_button">Авторизоваться</button>
 							<button class="cart_total_button"><a href="{% url 'users:register' %}" style="color: white;" onmouseover="this.style.color='black'" onmouseout="this.style.color='white'">Зарегистрироваться</a></button>

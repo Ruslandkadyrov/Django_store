@@ -19,7 +19,7 @@ def register(request):
             auth.login(request, user)
             if session_key:
                 Cart.objects.filter(session_key=session_key).update(user=user)
-            messages.success(request, f"{user.username}, Вы зарегестрировались")
+            messages.success(request, f"{user.first_name}, Вы зарегестрировались")
             return redirect("myapp:index")
     form = NewUserForm()
     context = {'form': form}
@@ -32,11 +32,7 @@ def profile(request):
     if request.method == 'POST':
         user.first_name = request.POST.get('first_name')
         user.last_name = request.POST.get('last_name')
-        user.email = request.POST.get('email')
-        user.username = request.POST.get('username')
         user.contact_number = request.POST.get('contact_number')
-        user.town = request.POST.get('town')
-        user.adress = request.POST.get('adress')
         user.save()
         messages.success(request, "Профиль успешно обнавлен")
         return redirect('users:profile')
@@ -49,17 +45,19 @@ def users_cart(request):
 
 def login(request):
     if request.method == 'POST':
-        form = UserLoginForm(data=request.POST)
+        form_data = request.POST.copy()
+        form_data['username'] = form_data['contact_number']  # Копируем значение из contact_number в username
+        form = UserLoginForm(data=form_data)  # Передаем скорректированные данные в форму
         if form.is_valid():
-            username = request.POST['username']
+            contact_number = request.POST['contact_number']
             password = request.POST['password']
-            user = auth.authenticate(username=username, password=password)
+            user = auth.authenticate(request=request, contact_number=contact_number, password=password)
 
             session_key = request.session.session_key
 
             if user:
                 auth.login(request, user)
-                messages.success(request, f"{username}, Вы вошли в аккаунт")
+                messages.success(request, f"{contact_number}, Вы вошли в аккаунт")
 
                 if session_key:
                     Cart.objects.filter(session_key=session_key).update(user=user)
