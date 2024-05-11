@@ -45,22 +45,57 @@
             <!-- Billing Details -->
             <div class="col-lg-6">
                 <div class="billing">
-                    <div class="checkout_title">Регистрация</div>
+                    <div class="checkout_title">Детали заказа</div>
                     <div class="checkout_form_container">
-                        <form action="#" id="checkout_form" method="post">
+                        <form action="{% url "orders:create_order" %}" method="post">
                             {% csrf_token %}
                             <div class="d-flex flex-lg-row flex-column align-items-start justify-content-between">
-                                <input type="text" class="checkout_input checkout_input_50" name="first_name" placeholder="Имя" required="required">
-                                <input type="text" class="checkout_input checkout_input_50" name="last_name" placeholder="Фамилия" required="required">
+                                <input type="text" class="checkout_input checkout_input_50" name="first_name" placeholder="Имя"
+                                    value="{% if form.first_name.value %}{{ form.first_name.value }}{% endif %}" required="required">
+                                {% if form.first_name.errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show">{{form.first_name.errors}}</div>
+                                {% endif %}
+                                <input type="text" class="checkout_input checkout_input_50" name="last_name" placeholder="Фамилия"
+                                    value="{% if form.last_name.value %}{{ form.last_name.value }}{% endif %}" required="required">
+                                {% if form.last_name.errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show">{{form.last_name.errors}}</div>
+                                {% endif %}
                             </div>
-                            <input type="text" class="checkout_input" name="username" placeholder="Логин">
-                            <input type="text" class="checkout_input" name="email" placeholder="E-mail" required="required">
-                            <input type="text" class="checkout_input" name="contact_number" placeholder="Номер телефона (8ХХХХХХХХХХ)" required="required">
-                            <input type="text" class="checkout_input" name="town" placeholder="Город доставки" required="required">
-                            <input type="text" class="checkout_input" name="adress" placeholder="Адрес доставки" required="required">
-                            <input type="text" class="checkout_input" name="password1" placeholder="Пароль" required="required">
-                            <input type="text" class="checkout_input" name="password2" placeholder="Пароль повторно" required="required">
-                            <button type="submit" class="cart_total_button">Зарегистрироваться</button>
+                            <input type="text" class="checkout_input" name="phone_number" placeholder="Номер телефона (8ХХХХХХХХХХ)"
+                                value="{% if form.phone_number.value %}{{ form.phone_number.value }}{% endif %}" required="required">
+                            {% if form.phone_number.errors %}
+                                <div class="alert alert-danger alert-dismissible fade show">{{form.phone_number.errors}}</div>
+                            {% endif %}
+                            <div class="billing_options">
+                                <div class="billing_account">
+                                    <input type="radio" name="requires_delivery" class="regular_radio" id="id_requires_delivery" value="0">
+                                    <label for="id_requires_delivery">Самовывоз</label>
+                                </div>
+                                <div class="billing_shipping">
+                                    <input type="radio" name="requires_delivery" class="regular_radio" id="id_requires_delivery" value="1">
+                                    <label for="id_requires_delivery">Нужна доставка</label>
+                                </div>
+                            </div> 
+                            <div class="mb-3" id="deliveryAddressField">                           
+                                <input type="text" class="checkout_input" name="delivery_address" placeholder="Адрес доставки"
+                                    value="{% if form.delivery_address.value %}{{ form.delivery_address.value }}{% endif %}">
+                                {% if form.delivery_address.errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show">{{form.delivery_address.errors}}</div>
+                                {% endif %}
+                            </div>
+                            <div class="payment_options">
+                                <div>
+                                    <input type="radio" name="payment_on_get" class="regular_radio" id="id_payment_on_get" value="0" checked>
+                                    <label for="radio_payment_1">Оплата при получении</label>
+                                </div>
+                                <div>
+                                    <input type="radio" name="payment_on_get" class="regular_radio" id="id_payment_on_get" value="1">
+                                    <label for="radio_payment_2">Онлайн оплата</label>
+                                    <div class="visa payment_option"><a href="#"><img src="{% static 'users/images/visa.jpg' %}" alt=""></a></div>
+                                    <div class="master payment_option"><a href="#"><img src="{% static 'users/images/master.jpg' %}"alt=""></a></div>
+                                </div>
+                            </div>
+                            <button class="cart_total_button">Оформить заказ</button>
                         </form>
                     </div>
                 </div>
@@ -84,22 +119,9 @@
                             {% endfor %}
                             <li class="d-flex flex-row align-items-start justify-content-start total_row">
                                 <div class="cart_total_title">Общая стоимость товаров</div>
-                                <div class="cart_total_price ml-auto">{{carts.total_price}}</div>
+                                <div class="cart_total_price ml-auto">{{carts.total_price}} руб.</div>
                             </li>
                         </ul>
-                    </div>
-                    <div class="payment_options">
-                        <div>
-                            <input type="radio" id="radio_payment_1" name="regular_radio" class="regular_radio">
-                            <label for="radio_payment_1">cash on delivery</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="radio_payment_2" name="regular_radio" class="regular_radio" checked>
-                            <label for="radio_payment_2">paypal</label>
-                            <div class="visa payment_option"><a href="#"><img src="images/visa.jpg" alt=""></a></div>
-                            <div class="master payment_option"><a href="#"><img src="images/master.jpg" alt=""></a></div>
-                        </div>
-                        <button class="cart_total_button">place order</button>
                     </div>
                 </div>
             </div>
