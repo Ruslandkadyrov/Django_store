@@ -17,11 +17,12 @@ class OrderItemTabulareAdmin(admin.TabularInline):
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = "order", "product", "name", "price", "quantity"
+    list_display = "order", "product", "name", "price", "quantity", "size"
     search_fields = (
         "order",
         "product",
         "name",
+        "size",
     )
 
 

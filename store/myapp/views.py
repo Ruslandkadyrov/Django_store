@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from .models import Category, Product, Subcategory, Size
+from .models import Category, Product, Subcategory, Size, ProductSizeQty
 from django.core.paginator import Paginator
 
 NUMBER_OF_POSTS_PER_PAGE = 10

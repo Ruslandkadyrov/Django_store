@@ -9,6 +9,7 @@ from cart.models import Cart
 from orders.forms import CreateOrderForm
 from orders.models import Order, OrderItem
 from cart.utils import get_user_carts
+from myapp.models import ProductSizeQty
 
 
 @login_required
@@ -35,10 +36,16 @@ def create_order(request):
                             name = cart_item.product.name
                             price = cart_item.product.price
                             quantity = cart_item.quantity
+                            size = cart_item.size
+                            try:
+                                product_size_qty = product.product_size_qty.get(size=size)
+                            except ProductSizeQty.DoesNotExist:
+                                raise ValidationError(f'Невозможно найти товар с размером {size}')
 
-                            if product.count < quantity:
+                            size_qty = product_size_qty.quantity
+                            if size_qty < quantity:
                                 raise ValidationError(f'Недостаточное количество товара {name} на складе\
-                                                       В наличии - {product.count}')
+                                                       В наличии - {size_qty}')
 
                             OrderItem.objects.create(
                                 order=order,
@@ -46,9 +53,14 @@ def create_order(request):
                                 name=name,
                                 price=price,
                                 quantity=quantity,
+                                size=size,
                             )
-                            product.count -= quantity
-                            product.save()
+                            size_qty -= quantity
+                            product_size_qty.quantity = size_qty
+                            product_size_qty.save()
+                            if size_qty == 0:
+                                product_size_qty.delete()
+
 
                         # Очистить корзину пользователя после создания заказа
                         cart_items.delete()
