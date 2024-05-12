@@ -3,8 +3,10 @@ from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.db.models import Prefetch
 
 from cart.models import Cart
+from orders.models import Order, OrderItem
 from .forms import NewUserForm, UserLoginForm
 from django.contrib.auth.views import LogoutView
 
@@ -36,7 +38,17 @@ def profile(request):
         user.save()
         messages.success(request, "Профиль успешно обнавлен")
         return redirect('users:profile')
-    return render(request, 'users/profile.html', {'user': user})
+    orders = Order.objects.filter(user=request.user).prefetch_related(
+                Prefetch(
+                    "orderitem_set",
+                    queryset=OrderItem.objects.select_related("product"),
+                )
+            ).order_by("-id")
+    context = {
+        'user': user,
+        'orders': orders,
+    }
+    return render(request, 'users/profile.html', context)
 
 
 def users_cart(request):

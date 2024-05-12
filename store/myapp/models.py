@@ -51,7 +51,7 @@ class Product(models.Model):
 
     def __str__(self) -> str:
         return self.name
-    
+
 
 class ProductSizeQty(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

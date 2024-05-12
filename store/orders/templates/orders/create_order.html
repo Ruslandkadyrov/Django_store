@@ -65,17 +65,7 @@
                                 value="{% if form.phone_number.value %}{{ form.phone_number.value }}{% endif %}" required="required">
                             {% if form.phone_number.errors %}
                                 <div class="alert alert-danger alert-dismissible fade show">{{form.phone_number.errors}}</div>
-                            {% endif %}
-                            <div class="billing_options">
-                                <div class="billing_account">
-                                    <input type="radio" name="requires_delivery" class="regular_radio" id="id_requires_delivery" value="0">
-                                    <label for="id_requires_delivery">Самовывоз</label>
-                                </div>
-                                <div class="billing_shipping">
-                                    <input type="radio" name="requires_delivery" class="regular_radio" id="id_requires_delivery" value="1">
-                                    <label for="id_requires_delivery">Нужна доставка</label>
-                                </div>
-                            </div> 
+                            {% endif %} 
                             <div class="mb-3" id="deliveryAddressField">                           
                                 <input type="text" class="checkout_input" name="delivery_address" placeholder="Адрес доставки"
                                     value="{% if form.delivery_address.value %}{{ form.delivery_address.value }}{% endif %}">

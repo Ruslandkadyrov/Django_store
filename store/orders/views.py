@@ -13,7 +13,7 @@ from cart.utils import get_user_carts
 
 @login_required
 def create_order(request):
-    user_cart = get_user_carts(request) 
+    user_cart = get_user_carts(request)
     if request.method == 'POST':
         form = CreateOrderForm(data=request.POST)
         if form.is_valid():
@@ -26,7 +26,6 @@ def create_order(request):
                         order = Order.objects.create(
                             user=user,
                             phone_number=form.cleaned_data['phone_number'],
-                            requires_delivery=form.cleaned_data['requires_delivery'],
                             delivery_address=form.cleaned_data['delivery_address'],
                             payment_on_get=form.cleaned_data['payment_on_get'],
                         )
